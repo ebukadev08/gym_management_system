@@ -1,4 +1,4 @@
-package com.example.gym_saas;
+package com.example.gymsaas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
