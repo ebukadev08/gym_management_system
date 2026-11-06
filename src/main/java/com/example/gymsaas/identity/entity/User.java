@@ -1,6 +1,8 @@
 package com.example.gymsaas.identity.entity;
 
 import com.example.gymsaas.common.entity.BaseEntity;
+import com.example.gymsaas.identity.enums.UserStatus;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

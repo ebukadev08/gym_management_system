@@ -1,6 +1,8 @@
 package com.example.gymsaas.equipment.entity;
 
 import com.example.gymsaas.common.entity.TenantAwareEntity;
+import com.example.gymsaas.equipment.enums.EquipmentStatus;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

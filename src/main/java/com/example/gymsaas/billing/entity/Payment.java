@@ -1,5 +1,6 @@
 package com.example.gymsaas.billing.entity;
 
+import com.example.gymsaas.billing.enums.PaymentStatus;
 import com.example.gymsaas.common.entity.TenantAwareEntity;
 import jakarta.persistence.*;
 import lombok.Getter;

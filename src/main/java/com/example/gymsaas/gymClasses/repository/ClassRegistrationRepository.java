@@ -1,6 +1,8 @@
 package com.example.gymsaas.gymClasses.repository;
 
 import com.example.gymsaas.gymClasses.entity.*;
+import com.example.gymsaas.gymClasses.enums.RegistrationStatus;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

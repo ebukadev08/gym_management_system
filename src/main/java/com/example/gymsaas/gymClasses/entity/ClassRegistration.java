@@ -3,6 +3,8 @@ package com.example.gymsaas.gymClasses.entity;
 import com.example.gymsaas.common.entity.TenantAwareEntity;
 import com.example.gymsaas.member.entity.Member;
 import com.example.gymsaas.gymClasses.entity.ClassSession;
+import com.example.gymsaas.gymClasses.enums.RegistrationStatus;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
