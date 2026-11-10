@@ -18,3 +18,7 @@ app:
     issuer: https://localhost:8090
     jwk-set-uri: https://localhost:8090/oauth2/jwks
     trust-all-certs: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
