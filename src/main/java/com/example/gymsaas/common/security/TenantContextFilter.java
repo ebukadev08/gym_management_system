@@ -21,6 +21,7 @@ public class TenantContextFilter extends OncePerRequestFilter {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth instanceof AppAuthenticationToken token
+                    && token.getCurrentUser() != null
                     && token.getCurrentUser().tenantId() != null) {
                 TenantContext.setTenantId(token.getCurrentUser().tenantId());
             }

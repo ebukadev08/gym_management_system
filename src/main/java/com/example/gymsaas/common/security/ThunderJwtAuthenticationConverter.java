@@ -6,16 +6,16 @@ import com.example.gymsaas.identity.entity.User;
 import com.example.gymsaas.identity.enums.UserStatus;
 import com.example.gymsaas.identity.repository.UserRepository;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -29,9 +29,14 @@ public class ThunderJwtAuthenticationConverter implements Converter<Jwt, Abstrac
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {
-        User user = userRepository.findWithRolesByExternalIdentityId(jwt.getSubject())
-                .orElseThrow(() -> new BadCredentialsException("No user is linked to this identity"));
+        Optional<User> found = userRepository.findWithRolesByExternalIdentityId(jwt.getSubject());
 
+        // A real Thunder ID account with no gym account yet.
+        // It may only sign up a gym (see SecurityConfig).
+        if (found.isEmpty()) {
+            return new AppAuthenticationToken(jwt, List.of(new SimpleGrantedAuthority("ROLE_UNREGISTERED")), null);
+        }
+        User user = found.get();
         if (user.getStatus() != UserStatus.ACTIVE) {
             throw new DisabledException("User account is not active");
         }

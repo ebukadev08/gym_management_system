@@ -2,6 +2,7 @@ package com.example.gymsaas.common.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,7 +21,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.POST, "/api/tenants/signup").hasRole("UNREGISTERED")
+                .anyRequest().hasAnyRole("SUPER_ADMIN", "ADMIN", "MANAGER", "TRAINER", "MEMBER"))
                 .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(converter)))
                 .addFilterAfter(new TenantContextFilter(), BearerTokenAuthenticationFilter.class);
         return http.build();
