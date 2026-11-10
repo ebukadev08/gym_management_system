@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+import org.hibernate.annotations.TenantId;
+
 /**
  * Base class for every table that belongs to a gym (tenant).
  * On Monday we make tenant_id automatic with Hibernate's @TenantId.
@@ -16,6 +18,7 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class TenantAwareEntity extends BaseEntity {
 
+    @TenantId
     @Column(name = "tenant_id", nullable = false, updatable = false)
     private UUID tenantId;
 }

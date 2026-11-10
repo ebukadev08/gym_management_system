@@ -7,5 +7,14 @@ spring:
     hibernate:
       ddl-auto: validate
     open-in-view: false
+    properties:
+      hibernate:
+        tenant_identifier_resolver: com.example.gymsaas.common.tenant.TenantIdentifierResolver
   flyway:
     enabled: true
+
+app:
+  security:
+    issuer: https://localhost:8090
+    jwk-set-uri: https://localhost:8090/oauth2/jwks
+    trust-all-certs: true
