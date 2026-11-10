@@ -121,7 +121,7 @@ Never edit a migration that has already run. Add a new one instead.
 - [x] Project setup
 - [x] Database migrations and seed data
 - [x] JPA entities and repositories
-- [ ] Tenant context and Thunder ID authentication
+- [x] Tenant context and Thunder ID authentication
 - [ ] RBAC
 - [ ] Onboarding (tenant, staff, members)
 - [ ] Classes, trainers, registration
