@@ -17,14 +17,21 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                   ThunderJwtAuthenticationConverter converter) throws Exception {
+                                                   ThunderJwtAuthenticationConverter converter,
+                                                   SecurityErrorHandler errorHandler) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, "/api/tenants/signup").hasRole("UNREGISTERED")
-                .anyRequest().hasAnyRole("SUPER_ADMIN", "ADMIN", "MANAGER", "TRAINER", "MEMBER"))
-                .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(converter)))
+                        .requestMatchers(HttpMethod.POST, "/api/tenants/signup").hasRole("UNREGISTERED")
+                        .anyRequest().hasAnyRole("SUPER_ADMIN", "ADMIN", "MANAGER", "TRAINER", "MEMBER"))
+                .exceptionHandling(e -> e
+                        .authenticationEntryPoint(errorHandler)
+                        .accessDeniedHandler(errorHandler))
+                .oauth2ResourceServer(oauth -> oauth
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(converter))
+                        .authenticationEntryPoint(errorHandler)
+                        .accessDeniedHandler(errorHandler))
                 .addFilterAfter(new TenantContextFilter(), BearerTokenAuthenticationFilter.class);
         return http.build();
     }
